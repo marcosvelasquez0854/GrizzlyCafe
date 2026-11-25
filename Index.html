@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grizzly Cafe | Café y Boba</title>
+    <style>
+       
+        :root {
+            --color-fondo: #F5EBD9;
+            --color-crema-oscuro: #E8D5B5;
+            --color-marron-claro: #A67C52;
+            --color-marron-oscuro: #5C3A21;
+            --color-verde-oliva: #6B705C;
+            --color-verde-oscuro: #4A4E3E;
+            --color-texto: #3E2723;
+            --color-blanco: #FFFFFF;
+            --fuente-titulos: 'Impact', 'Arial Black', sans-serif;
+            --fuente-cuerpo: 'Georgia', serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--fuente-cuerpo);
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+
+            background-image: radial-gradient(var(--color-crema-oscuro) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        header {
+            background-color: var(--color-fondo);
+            text-align: center;
+            padding: 40px 20px 20px;
+            border-bottom: 4px dashed var(--color-marron-claro);
+            position: relative;
+        }
+
+        .logo-text {
+            font-family: var(--fuente-titulos);
+            font-size: 3.5rem;
+            color: var(--color-marron-oscuro);
+            letter-spacing: 2px;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-family: var(--fuente-cuerpo);
+            font-size: 1.2rem;
+            color: var(--color-marron-claro);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .cart-icon-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--color-marron-oscuro);
+            color: var(--color-blanco);
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+
+        .cart-icon-container:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--color-verde-oliva);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 50%;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .menu-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .menu-card {
+            background-color: var(--color-blanco);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 8px solid var(--color-marron-oscuro);
+        }
+
+        .menu-card h2 {
+            font-family: var(--fuente-titulos);
+            color: var(--color-marron-oscuro);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-section {
+            width: 30px;
+            height: 30px;
+            background-color: var(--color-crema-oscuro);
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+        }
+
+        .item-bebida {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item-bebida:last-child {
+            border-bottom: none;
+        }
+
+        .item-info h3 {
+            font-size: 1.1rem;
+            color: var(--color-texto);
+        }
+
+        .item-info p {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .item-precio {
+            font-weight: bold;
+            color: var(--color-marron-oscuro);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-add {
+            background-color: var(--color-verde-oliva);
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-add:hover {
+            background-color: var(--color-verde-oscuro);
+            transform: scale(1.1);
+        }
+
+        .extras-section {
+            background-color: var(--color-blanco);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border: 2px solid var(--color-marron-claro);
+        }
+
+        .extras-title {
+            background-color: var(--color-marron-claro);
+            color: var(--color-blanco);
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .reviews-section {
+            background-color: var(--color-crema-oscuro);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .reviews-section h2 {
+            font-family: var(--fuente-titulos);
+            color: var(--color-marron-oscuro);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .review-form {
+            background-color: var(--color-blanco);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--color-marron-oscuro);
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--color-marron-claro);
+            border-radius: 8px;
+            font-family: var(--fuente-cuerpo);
+            background-color: var(--color-fondo);
+        }
+
+        .btn-submit {
+            background-color: var(--color-marron-oscuro);
+            color: var(--color-blanco);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--color-verde-oscuro);
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-content {
+            background-color: var(--color-fondo);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-marron-oscuro);
+            font-weight: bold;
+        }
+
+        .cart-content h2 {
+            font-family: var(--fuente-titulos);
+            color: var(--color-marron-oscuro);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--color-marron-claro);
+            padding-bottom: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .cart-total {
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+            color: var(--color-marron-oscuro);
+        }
+
+        .checkout-area {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .checkbox-container input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .success-screen h2 {
+            color: var(--color-verde-oliva);
+            font-family: var(--fuente-titulos);
+            font-size: 2rem;
+            border: none;
+            margin-bottom: 10px;
+        }
+
+        .oso-feliz {
+            width: 120px;
+            height: 120px;
+            background-color: var(--color-marron-claro);
+            border-radius: 50%;
+            margin: 20px auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: bounce 1s infinite alternate;
+        }
+
+        .oso-oreja {
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-marron-oscuro);
+            border-radius: 50%;
+            position: absolute;
+            top: -10px;
+        }
+        .oso-oreja.izq { left: 0px; }
+        .oso-oreja.der { right: 0px; }
+
+        .oso-cara {
+            width: 80px;
+            height: 60px;
+            background-color: var(--color-crema-oscuro);
+            border-radius: 40px;
+            position: relative;
+        }
+
+        .oso-ojo {
+            width: 12px;
+            height: 12px;
+            background-color: var(--color-texto);
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+        }
+        .oso-ojo.izq { left: 15px; }
+        .oso-ojo.der { right: 15px; }
+
+        .oso-nariz {
+            width: 20px;
+            height: 15px;
+            background-color: var(--color-texto);
+            border-radius: 50%;
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .oso-sonrisa {
+            width: 30px;
+            height: 15px;
+            border-bottom: 3px solid var(--color-texto);
+            border-radius: 0 0 50px 50px;
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        footer {
+            background-color: var(--color-marron-oscuro);
+            color: var(--color-fondo);
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            border-top: 8px solid var(--color-verde-oliva);
+        }
+
+        footer h3 {
+            font-family: var(--fuente-titulos);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-section {
+                grid-template-columns: 1fr;
+            }
+            .logo-text {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="cart-icon-container" onclick="toggleCart()">
+        🛒
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+
+    <header>
+        <div class="logo-text">GRIZZLY CAFE</div>
+        <div class="subtitle">CAFÉ Y BOBA</div>
+    </header>
+
+    <div class="container">
+        
+
+        <div class="menu-section">
+
+            <div class="menu-card">
+                <h2><span class="icon-section">☕</span> CAFÉ</h2>
+                <p style="font-size: 0.9rem; margin-bottom: 15px; color: #666;">Mezcla de café de Veracruz con nibs de cacao criollo tostado media alto.</p>
+                
+                <div class="item-bebida">
+                    <div class="item-info">
+                        <h3>Café Americano Frío</h3>
+                        <p>Concentrado de café en prensa francesa, agua purificada y hielo.</p>
+                    </div>
+                    <div class="item-precio">
+                        $40
+                        <button class="btn-add" onclick="addToCart('Café Americano Frío', 40)">+</button>
+                    </div>
+                </div>
+
+                <div class="item-bebida">
+                    <div class="item-info">
+                        <h3>Café con Leche Frío</h3>
+                        <p>Concentrado de café, leche entera y hielo. (Suave y cremoso).</p>
+                    </div>
+                    <div class="item-precio">
+                        $50
+                        <button class="btn-add" onclick="addToCart('Café con Leche Frío', 50)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <h2><span class="icon-section">🍵</span> TÉ Y MILK TEA</h2>
+                <div class="item-bebida">
+                    <div class="item-info">
+                        <h3>Té Negro Frío</h3>
+                        <p>Infusión concentrada de té negro y hielo. Muy refrescante.</p>
+                    </div>
+                    <div class="item-precio">
+                        $30
+                        <button class="btn-add" onclick="addToCart('Té Negro Frío', 30)">+</button>
+                    </div>
+                </div>
+
+                <div class="item-bebida">
+                    <div class="item-info">
+                        <h3>Milk Tea Clásico</h3>
+                        <p>Infusión de té negro mezclada con leche y hielo.</p>
+                    </div>
+                    <div class="item-precio">
+                        $40
+                        <button class="btn-add" onclick="addToCart('Milk Tea Clásico', 40)">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="extras-section">
+            <div class="extras-title">+ AGREGA A TU BEBIDA (EXTRAS)</div>
+            
+            <div class="item-bebida">
+                <div class="item-info">
+                    <h3>Porción de boba</h3>
+                    <p>Cocida con azúcar mascabada y un toque de canela.</p>
+                </div>
+                <div class="item-precio">
+                    +$10
+                    <button class="btn-add" onclick="addToCart('Extra: Porción de boba', 10)">+</button>
+                </div>
+            </div>
+
+            <div class="item-bebida">
+                <div class="item-info">
+                    <h3>Cambio a Leche Deslactosada</h3>
+                </div>
+                <div class="item-precio">
+                    $5
+                    <button class="btn-add" onclick="addToCart('Extra: Leche Deslactosada', 5)">+</button>
+                </div>
+            </div>
+
+            <div class="item-bebida">
+                <div class="item-info">
+                    <h3>Cambio a Leche Evaporada</h3>
+                    <p>(Extra cremosa)</p>
+                </div>
+                <div class="item-precio">
+                    +$10
+                    <button class="btn-add" onclick="addToCart('Extra: Leche Evaporada', 10)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="reviews-section">
+            <h2>📸 Comparte tu experiencia</h2>
+            <p style="margin-bottom: 20px;">Sube una foto de tu bebida y déjanos tu calificación.</p>
+            
+            <form class="review-form" onsubmit="event.preventDefault(); alert('¡Gracias por tu reseña! (Simulación de guardado)');">
+                <div class="form-group">
+                    <label for="nombre">Tu Nombre:</label>
+                    <input type="text" id="nombre" required placeholder="Ej. Juan Pérez">
+                </div>
+                
+                <div class="form-group">
+                    <label for="calificacion">Calificación:</label>
+                    <select id="calificacion" required>
+                        <option value="5">⭐⭐⭐⭐⭐ (Excelente)</option>
+                        <option value="4">⭐⭐⭐⭐ (Muy bueno)</option>
+                        <option value="3">⭐⭐⭐ (Bueno)</option>
+                        <option value="2">⭐⭐ (Regular)</option>
+                        <option value="1">⭐ (Malo)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="foto">Sube una foto (Opcional):</label>
+                    <input type="file" id="foto" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label for="comentario">Comentario:</label>
+                    <textarea id="comentario" rows="3" required placeholder="¿Qué te pareció la bebida?"></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Enviar Reseña</button>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <span class="close-btn" onclick="toggleCart()">×</span>
+            
+            <!-- Vista del Carrito -->
+            <div id="cartView">
+                <h2>Tu Pedido</h2>
+                <div id="cartItemsList">
+
+                    <p style="text-align: center; color: #888;">El carrito está vacío.</p>
+                </div>
+                <div class="cart-total" id="cartTotal">Total: $0</div>
+                
+                <div class="checkout-area">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="confirmBuy" onchange="toggleCheckoutBtn()">
+                        Acepto realizar la compra
+                    </label>
+                    <button class="btn-submit" id="btnCheckout" onclick="processOrder()" disabled style="opacity: 0.5;">Comprar</button>
+                </div>
+            </div>
+
+            <div class="success-screen" id="successScreen">
+                <h2>¡Pedido realizado con éxito!</h2>
+                <p>Tu café y boba están en camino.</p>
+                
+                <div class="oso-feliz">
+                    <div class="oso-oreja izq"></div>
+                    <div class="oso-oreja der"></div>
+                    <div class="oso-cara">
+                        <div class="oso-ojo izq"></div>
+                        <div class="oso-ojo der"></div>
+                        <div class="oso-nariz"></div>
+                        <div class="oso-sonrisa"></div>
+                    </div>
+                </div>
+                
+                <button class="btn-submit" onclick="resetApp()" style="margin-top: 20px;">Hacer otro pedido</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h3>GRIZZLY CAFE | ZAPOPAN</h3>
+        <p>📞 Pide por WhatsApp: 331 787 1645 o 334 702 1862</p>
+    </footer>
+
+    <script>
+        let cart = [];
+
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'flex';
+                renderCart();
+            }
+        }
+
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name: name, price: price, quantity: 1 });
+            }
+            
+            updateCartCount();
+            
+            const countElement = document.getElementById('cartCount');
+            countElement.style.transform = 'scale(1.5)';
+            setTimeout(() => { countElement.style.transform = 'scale(1)'; }, 200);
+        }
+
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').innerText = totalItems;
+        }
+
+        function renderCart() {
+            const list = document.getElementById('cartItemsList');
+            const totalElement = document.getElementById('cartTotal');
+            list.innerHTML = '';
+            
+            if (cart.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: #888;">El carrito está vacío.</p>';
+                totalElement.innerText = 'Total: $0';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                list.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.quantity}x</strong> ${item.name}
+                        </div>
+                        <div>
+                            $${itemTotal}
+                            <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer; margin-left:10px;">✖</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            totalElement.innerText = `Total: $${total}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            renderCart();
+        }
+
+        function toggleCheckoutBtn() {
+            const checkbox = document.getElementById('confirmBuy');
+            const btn = document.getElementById('btnCheckout');
+            
+            if (checkbox.checked) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+            }
+        }
+
+        function processOrder() {
+            if (cart.length === 0) return;
+
+            document.getElementById('cartView').style.display = 'none';
+            document.getElementById('successScreen').style.display = 'block';
+        }
+
+        function resetApp() {
+            cart = [];
+            updateCartCount();
+            document.getElementById('cartView').style.display = 'block';
+            document.getElementById('successScreen').style.display = 'none';
+            document.getElementById('confirmBuy').checked = false;
+            toggleCheckoutBtn();
+            toggleCart();
+        }
+    </script>
+</body>
+</html>
